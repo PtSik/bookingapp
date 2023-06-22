@@ -25,7 +25,7 @@
 .headerListItem {
   display: flex;
   align-items: center;
-  grid-area: 10px;
+  gap: 7px;
 }
 
 .headerListItem.active {
