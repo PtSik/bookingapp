@@ -1,4 +1,8 @@
+import "./hotel.css";
 import Navbar from "../../components/navbar/Navbar";
+import Header from "../../components/header/Header";
+import MailList from "../../components/mailList/MailList";
+import Footer from "../../components/footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -6,36 +10,34 @@ import {
   faCircleXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import "./hotel.css";
-import MailList from "../../components/mailList/MailList";
-import Footer from "../../components/footer/Footer";
-import Header from "../../components/header/Header";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import useFetch from "../../hooks/useFetch";
+import { useLocation, useNavigate } from "react-router-dom";
+import { SearchContext } from "../../context/SearchContext";
+import { AuthContext } from "../../context/AuthContext";
+import Reserve from "../../components/reserve/Reserve";
 
 const Hotel = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
-  const photos = [
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707367.jpg?k=cbacfdeb8404af56a1a94812575d96f6b80f6740fd491d02c6fc3912a16d8757&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708745.jpg?k=1aae4678d645c63e0d90cdae8127b15f1e3232d4739bdf387a6578dc3b14bdfd&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707776.jpg?k=054bb3e27c9e58d3bb1110349eb5e6e24dacd53fbb0316b9e2519b2bf3c520ae&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708693.jpg?k=ea210b4fa329fe302eab55dd9818c0571afba2abd2225ca3a36457f9afa74e94&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707389.jpg?k=52156673f9eb6d5d99d3eed9386491a0465ce6f3b995f005ac71abc192dd5827&o=&hp=1",
-    },
-  ];
+  const { data, loading, error } = useFetch(`/hotels/find/${id}`);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const { dates, options } = useContext(SearchContext);
+
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  function dayDifference(date1, date2) {
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+    return diffDays;
+  }
+
+  const days = dayDifference(dates[0].endDate, dates[0].startDate);
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -50,94 +52,101 @@ const Hotel = () => {
     } else {
       newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1;
     }
+
     setSlideNumber(newSlideNumber);
   };
 
+  const handleClick = () => {
+    if (user) {
+      setOpenModal(true);
+    } else {
+      navigate("/login");
+    }
+  };
   return (
     <div>
       <Navbar />
       <Header type="list" />
-      <div className="hotelContainer">
-        {open && (
-          <div className="slider">
-            <FontAwesomeIcon
-              icon={faCircleXmark}
-              className="close"
-              onClick={() => setOpen(false)}
-            />
-            <FontAwesomeIcon
-              icon={faCircleArrowLeft}
-              className="arrow"
-              onClick={() => handleMove("l")}
-            />
-            <div className="sliderWrapper">
-              <img src={photos[slideNumber].src} alt="" className="sliderImg" />
-            </div>
-            <FontAwesomeIcon
-              icon={faCircleArrowRight}
-              className="arrow"
-              onClick={() => handleMove("r")}
-            />
-          </div>
-        )}
-        <div className="hotelWrapper">
-          <button className="bookNow">Zarezerwuj teraz!</button>
-          <h1 className="hotelTitle">Grand Hotel</h1>
-          <div className="hotelAddress">
-            <FontAwesomeIcon icon={faLocationDot} />
-            <span>ul. Floriańska 39, 31-019 Kraków</span>
-          </div>
-          <span className="hotelDistnace">
-            Doskonała lokalizacja - 500m od centrum
-          </span>
-          <span className="hotelPriceHighlight">
-            Zarezerwuj pobyt powyżej 320zł w tym obiekcie i skorzystaj z
-            bezpłatnej taksówki lotniskowej
-          </span>
-          <div className="hotelImages">
-            {photos.map((photo, i) => (
-              <div className="hotelImgWrapper">
+      {loading ? (
+        "loading"
+      ) : (
+        <div className="hotelContainer">
+          {open && (
+            <div className="slider">
+              <FontAwesomeIcon
+                icon={faCircleXmark}
+                className="close"
+                onClick={() => setOpen(false)}
+              />
+              <FontAwesomeIcon
+                icon={faCircleArrowLeft}
+                className="arrow"
+                onClick={() => handleMove("l")}
+              />
+              <div className="sliderWrapper">
                 <img
-                  onClick={() => handleOpen(i)}
-                  src={photo.src}
+                  src={data.photos[slideNumber]}
                   alt=""
-                  className="hotelImg"
+                  className="sliderImg"
                 />
               </div>
-            ))}
-          </div>
-          <div className="hotelDetails">
-            <div className="hotelDetailsTexts">
-              <h1 className="hotelTitle">Zamieszkaj w sercu miasta</h1>
-              <p className="hotelDesc">
-                Położony 5 minut spacerem od Bramy Floriańskiej w Krakowie.Grand
-                Hotel oferuje zakwaterowanie z klimatyzacją i darmowe wifi.
-                Pokoje mają drewnianą podłogę i wyposażone są w w pełni
-                wyposażone w aneks kuchenny z kuchenką mikrofalową, telewizor z
-                płaskim ekranem, oraz łazienkę z prysznicem i suszarką do
-                włosów. Lodówka jest również oferowana, a także czajnik
-                elektryczny. Popularne atrakcje w pobliżu apartamentu to m.in
-                Sukiennice, Rynek Główny i Wieża Ratuszowa. Najbliższy lotnisko
-                to Jan Paweł II International Kraków – Balice, 16,1 km z Grand
-                Hotel, a obiekt oferuje płatny transfer lotniskowy.
-              </p>
+              <FontAwesomeIcon
+                icon={faCircleArrowRight}
+                className="arrow"
+                onClick={() => handleMove("r")}
+              />
             </div>
-            <div className="hotelDetailsPrice">
-              <h1>Idealny na 9 nocy!</h1>
-              <span>
-                Położony w samym sercu Krakowa, ten apartament ma doskonałą
-                ocene lokalizacji 9,8!
-              </span>
-              <h2>
-                <b>850zł</b> (9 nocy)
-              </h2>
-              <button>Zarezerwuj teraz!</button>
+          )}
+          <div className="hotelWrapper">
+            <button className="bookNow">Zarezerwuj teraz!</button>
+            <h1 className="hotelTitle">{data.name}</h1>
+            <div className="hotelAddress">
+              <FontAwesomeIcon icon={faLocationDot} />
+              <span>{data.address}</span>
+            </div>
+            <span className="hotelDistance">
+              Doskonała lokalizacja – {data.distance}m od centrum
+            </span>
+            <span className="hotelPriceHighlight">
+              Zarezerwuj pobyt powyżej {data.cheapestPrice} zł w tym obiekcie i
+              skorzystaj z bezpłatnej taksówki lotniskowej
+            </span>
+            <div className="hotelImages">
+              {data.photos?.map((photo, i) => (
+                <div className="hotelImgWrapper" key={i}>
+                  <img
+                    onClick={() => handleOpen(i)}
+                    src={photo}
+                    alt=""
+                    className="hotelImg"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="hotelDetails">
+              <div className="hotelDetailsTexts">
+                <h1 className="hotelTitle">{data.title}</h1>
+                <p className="hotelDesc">{data.desc}</p>
+              </div>
+              <div className="hotelDetailsPrice">
+                <h1>Idealny na {days} nocy!</h1>
+                <span>
+                  Położony w samym sercu Krakowa, ten apartament ma doskonałą
+                  ocene lokalizacji 9,8!
+                </span>
+                <h2>
+                  <b>{days * data.cheapestPrice * options.room} zł</b> ({days}{" "}
+                  nocy)
+                </h2>
+                <button onClick={handleClick}>Zarezerwuj teraz!</button>
+              </div>
             </div>
           </div>
+          <MailList />
+          <Footer />
         </div>
-        <MailList />
-        <Footer />
-      </div>
+      )}
+      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
     </div>
   );
 };

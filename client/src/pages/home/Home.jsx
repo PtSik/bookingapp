@@ -1,25 +1,25 @@
-import Navbar from "../../components/navbar/Navbar";
-import Header from "../../components/header/Header";
-import "./home.css";
 import Featured from "../../components/featured/Featured";
-import PropertyList from "../../components/propertyList/PropertyList";
-import FeaturedProperites from "../../components/featuredProperties/FeaturedProperites";
-import MailList from "../../components/mailList/MailList";
+import FeaturedProperties from "../../components/featuredProperties/FeaturedProperties";
 import Footer from "../../components/footer/Footer";
+import Header from "../../components/header/Header";
+import MailList from "../../components/mailList/MailList";
+import Navbar from "../../components/navbar/Navbar";
+import PropertyList from "../../components/propertyList/PropertyList";
+import "./home.css";
 
 const Home = () => {
   return (
     <div>
       <Navbar />
-      <Header />
+      <Header/>
       <div className="homeContainer">
-        <Featured />
+        <Featured/>
         <h1 className="homeTitle">Przeglądaj według rodzaju zakwaterowania</h1>
-        <PropertyList />
+        <PropertyList/>
         <h1 className="homeTitle">Mieszkania które kochają nasi goście</h1>
-        <FeaturedProperites />
-        <MailList />
-        <Footer />
+        <FeaturedProperties/>
+        <MailList/>
+        <Footer/>
       </div>
     </div>
   );

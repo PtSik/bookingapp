@@ -1,6 +1,5 @@
-import React from "react";
-import "./featured.css";
 import useFetch from "../../hooks/useFetch";
+import "./featured.css";
 
 const Featured = () => {
   const { data, loading, error } = useFetch(
@@ -10,7 +9,7 @@ const Featured = () => {
   return (
     <div className="featured">
       {loading ? (
-        "Ładowanie proszę czekać"
+        "Loading please wait"
       ) : (
         <>
           <div className="featuredItem">
@@ -32,11 +31,10 @@ const Featured = () => {
               className="featuredImg"
             />
             <div className="featuredTitles">
-              <h1>Madryt</h1>
+              <h1>Madrid</h1>
               <h2>{data[1]} dostępnych</h2>
             </div>
           </div>
-
           <div className="featuredItem">
             <img
               src="https://cf.bstatic.com/xdata/images/city/max500/689422.webp?k=2595c93e7e067b9ba95f90713f80ba6e5fa88a66e6e55600bd27a5128808fdf2&o="
@@ -44,7 +42,7 @@ const Featured = () => {
               className="featuredImg"
             />
             <div className="featuredTitles">
-              <h1>Londyn</h1>
+              <h1>London</h1>
               <h2>{data[2]} dostępnych</h2>
             </div>
           </div>
