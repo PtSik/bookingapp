@@ -45,45 +45,45 @@ const List = () => {
             <div className="lsItem">
               <label>Opcje</label>
               <div className="lsOptions">
-              <div className="lsOptionItem">
-                <span className="lsOptionText">
-                  Min cena<small> za noc</small>
-                </span>
-                <input type="number" className="lsOptionInput" />
-              </div>
-              <div className="lsOptionItem">
-                <span className="lsOptionText">
-                  Max cena<small> za noc</small>
-                </span>
-                <input type="number" className="lsOptionInput" />
-              </div>
-              <div className="lsOptionItem">
-                <span className="lsOptionText">Dorośli</span>
-                <input
-                  type="number"
-                  min={1}
-                  className="lsOptionInput"
-                  placeholder={options.adult}
-                />
-              </div>
-              <div className="lsOptionItem">
-                <span className="lsOptionText">Dzieci</span>
-                <input
-                  type="number"
-                  min={0}
-                  className="lsOptionInput"
-                  placeholder={options.children}
-                />
-              </div>
-              <div className="lsOptionItem">
-                <span className="lsOptionText">Pokój</span>
-                <input
-                  type="number"
-                  min={1}
-                  className="lsOptionInput"
-                  placeholder={options.room}
-                />
-              </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">
+                    Min cena<small> za noc</small>
+                  </span>
+                  <input type="number" className="lsOptionInput" />
+                </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">
+                    Max cena<small> za noc</small>
+                  </span>
+                  <input type="number" className="lsOptionInput" />
+                </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Dorośli</span>
+                  <input
+                    type="number"
+                    min={1}
+                    className="lsOptionInput"
+                    placeholder={options.adult}
+                  />
+                </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Dzieci</span>
+                  <input
+                    type="number"
+                    min={0}
+                    className="lsOptionInput"
+                    placeholder={options.children}
+                  />
+                </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Pokój</span>
+                  <input
+                    type="number"
+                    min={1}
+                    className="lsOptionInput"
+                    placeholder={options.room}
+                  />
+                </div>
               </div>
             </div>
             <button>Szukaj</button>

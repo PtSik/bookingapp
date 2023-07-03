@@ -85,7 +85,7 @@ const Header = ({ type }) => {
               szeroką gamę ofert obejmujących hotele, domy wakacyjne i wiele
               innych unikalnych obiektów.
             </p>
-            <button className="headerBtn">Sign in / Register</button>
+            <button className="headerBtn">Zaloguj się / Zarejestruj się </button>
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faBed} className="headerIcon" />
