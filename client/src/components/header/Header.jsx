@@ -68,7 +68,7 @@ const Header = ({ type }) => {
           </div>
           <div className="headerListItem">
             <FontAwesomeIcon icon={faPlane} />
-            <span>Loty</span>
+            <a href="https://www.skyscanner.pl/" style={{ color: "inherit", textDecoration: "none" }}>Loty</a>
           </div>
           <div className="headerListItem">
             <FontAwesomeIcon icon={faCar} />
