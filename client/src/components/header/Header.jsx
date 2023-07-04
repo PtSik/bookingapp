@@ -14,7 +14,7 @@ import { useContext, useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -37,7 +37,6 @@ const Header = ({ type }) => {
 
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -92,7 +91,13 @@ const Header = ({ type }) => {
               szeroką gamę ofert obejmujących hotele, domy wakacyjne i wiele
               innych unikalnych obiektów.
             </p>
-            {!user && <button className="headerBtn">Zaloguj się / Zarejestruj się </button>}
+            <Link to="/login" style={{ color: "inherit", textDecoration: "none" }}>
+              {!user && (
+                <button className="headerBtn">
+                  Zaloguj się / Zarejestruj się{" "}
+                </button>
+              )}
+            </Link>
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faBed} className="headerIcon" />

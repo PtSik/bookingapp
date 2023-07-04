@@ -31,11 +31,11 @@ const Hotel = () => {
   const { dates, options } = useContext(SearchContext);
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-  function dayDifference(date1, date2) {
-    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+  const dayDifference = (date1, date2)=>{
+    const timeDiff = Math.abs(Date.parse(date2) - Date.parse(date1));
     const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
     return diffDays;
-  }
+  };
 
   const days = dayDifference(dates[0].endDate, dates[0].startDate);
 
@@ -98,7 +98,7 @@ const Hotel = () => {
             </div>
           )}
           <div className="hotelWrapper">
-            <button className="bookNow">Zarezerwuj teraz!</button>
+            <button onClick={handleClick} className="bookNow">Zarezerwuj teraz!</button>
             <h1 className="hotelTitle">{data.name}</h1>
             <div className="hotelAddress">
               <FontAwesomeIcon icon={faLocationDot} />
@@ -131,8 +131,7 @@ const Hotel = () => {
               <div className="hotelDetailsPrice">
                 <h1>Idealny na {days} nocy!</h1>
                 <span>
-                  Położony w samym sercu Krakowa, ten apartament ma doskonałą
-                  ocene lokalizacji 9,8!
+                {data.desc2}
                 </span>
                 <h2>
                   <b>{days * data.cheapestPrice * options.room} zł</b> ({days}{" "}

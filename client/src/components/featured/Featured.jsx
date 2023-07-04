@@ -3,7 +3,7 @@ import "./featured.css";
 
 const Featured = () => {
   const { data, loading, error } = useFetch(
-    "/hotels/countByCity?cities=berlin,madrid,london"
+    "/hotels/countByCity?cities=berlin,madryt,londyn"
   );
 
   return (
@@ -14,7 +14,7 @@ const Featured = () => {
         <>
           <div className="featuredItem">
             <img
-              src="https://cf.bstatic.com/xdata/images/city/max500/957801.webp?k=a969e39bcd40cdcc21786ba92826063e3cb09bf307bcfeac2aa392b838e9b7a5&o="
+              src="https://i.wpimg.pl/1200x/i.wp.pl/a/f/jpeg/32311/800-berlin_fotolia_44548462_berlinphotos030.jpeg"
               alt=""
               className="featuredImg"
             />
@@ -26,23 +26,23 @@ const Featured = () => {
 
           <div className="featuredItem">
             <img
-              src="https://cf.bstatic.com/xdata/images/city/max500/690334.webp?k=b99df435f06a15a1568ddd5f55d239507c0156985577681ab91274f917af6dbb&o="
+              src="https://cdn.podroze.smcloud.net/t/photos/t/139398/madryt-gran-via_1025172.jpg"
               alt=""
               className="featuredImg"
             />
             <div className="featuredTitles">
-              <h1>Madrid</h1>
+              <h1>Madryt</h1>
               <h2>{data[1]} dostępnych</h2>
             </div>
           </div>
           <div className="featuredItem">
             <img
-              src="https://cf.bstatic.com/xdata/images/city/max500/689422.webp?k=2595c93e7e067b9ba95f90713f80ba6e5fa88a66e6e55600bd27a5128808fdf2&o="
+              src="https://www.national-geographic.pl/media/cache/slider_big/uploads/media/default/0014/04/londyn-poznaj-ciekawostki-historyczne-o-stolicy-anglii-co-warto-zobaczyc-w-londynie-fot-getty-images.jpeg"
               alt=""
               className="featuredImg"
             />
             <div className="featuredTitles">
-              <h1>London</h1>
+              <h1>Londyn</h1>
               <h2>{data[2]} dostępnych</h2>
             </div>
           </div>
